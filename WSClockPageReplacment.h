@@ -7,9 +7,9 @@ using namespace std;
 struct Page {
 
 
-	int time; //последнее время использования
-	bool R; // Бит R
-	bool M; // Бит M
+	int time; //РїРѕСЃР»РµРґРЅРµРµ РІСЂРµРјСЏ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ
+	bool R; // Р‘РёС‚ R
+	bool M; // Р‘РёС‚ M
 	Page(int _time, bool _R, bool _M) : time(_time), R(_R), M(_M) {};
 
 	void writeToDisk() { cout << "was written" << endl; }
@@ -22,12 +22,15 @@ class PageRing {
 
 	const int max = 4;
 	const int t = 10;
+
 	list<Page> pageList;
 	int currentTime = 0;
-	int times[4] = { 0 };
+	int maxTime = 0;
 	int count = 0;
 
 public:
+	
+	PageRing() {};
 	void addPage();
 	void print();
 };
@@ -67,6 +70,8 @@ void PageRing:: displace_First_Unchanged_Page( Page& page) {
 
 void PageRing::addPage() {
 
+	
+
 	Page page(0, 0, 0);
 	int time; 
 	bool _R, _M;
@@ -77,12 +82,9 @@ void PageRing::addPage() {
 
 		cin >> time;
 
-		for (int i = 0; i < count; i++)
-			if (time < times[i]) {
-				cout << "incorrect time, last time one of other page more than that" << endl;
-				time = -1;
-				continue;
-			}
+		if (time > maxTime)
+			maxTime = time;
+		
 		if (time <= 0)
 			cout << "incorrect data" << endl;
 		
@@ -99,9 +101,13 @@ void PageRing::addPage() {
 	page.time = time;
 	page.R = _R;
 	page.M = _M;
-	times[count] = time;
+	
+	
+	currentTime = time * 2 + maxTime;
 
-	currentTime = time;
+	//cout <<" count "<< count<< "    " << time << "   "<< _R << "   "<< _M << endl;
+
+
 
 	if (count <= 4) {
 
@@ -109,7 +115,11 @@ void PageRing::addPage() {
 		return;
 	}
 	
-	else {
+	else  
+	{
+		
+
+		
 
 		auto arrow = pageList.begin();
 		bool wasCircle = false;
@@ -177,7 +187,7 @@ void PageRing::print() {
 	{
 
 		cout << "Time " << iter->time << endl << "R = " << iter->R << endl << "M = " << iter->M << endl;
-
+		iter++;
 	}
 
 
