@@ -63,7 +63,7 @@ void PageRing:: displace_First_Unchanged_Page( Page& page) {
 			return;
 		}
 
-
+iter++;
 	}
 
 }
