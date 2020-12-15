@@ -137,7 +137,7 @@ void PageRing::addPage() {
 				break;
 			}
 
-			else if (((*arrow).R == 0) && ((*arrow).M == 0) && ((currentTime - (*arrow).time) > t)) {
+			else if (((*arrow).R == 0) && ((*arrow).M == 1) && ((currentTime - (*arrow).time) > t)) {
 				(*arrow).M = 0;
 				arrow++;
 				wasPlannedWriteToDisk = true;
